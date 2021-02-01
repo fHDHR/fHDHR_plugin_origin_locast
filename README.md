@@ -15,3 +15,8 @@ Please Check the [Docs](docs/README.md) for Installation information.
 fHDHR is labeled as beta until we reach v1.0.0
 
 Join us in `#fHDHR <irc://irc.freenode.net/#fHDHR>`_ on Freenode.
+
+# !!NOTICE!!
+
+To reduce code duplication between variants, I am moving to a plugin system.
+The normal variant repos will stay active during the transition.
