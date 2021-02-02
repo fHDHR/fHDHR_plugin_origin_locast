@@ -1,4 +1,4 @@
-<p align="center">fHDHR_Locast    <img src="docs/images/logo.ico" alt="Logo"/></p>
+<p align="center">fHDHR origin Plugin Locast    <img src="docs/images/logo.ico" alt="Logo"/></p>
 
 
 Welcome to the world of streaming content as a DVR device! We use some fancy python here to achieve a system of:
@@ -13,7 +13,20 @@ fHDHR is labeled as beta until we reach v1.0.0
 
 Join us in `#fHDHR <irc://irc.freenode.net/#fHDHR>`_ on Freenode.
 
-# !!NOTICE!!
+# Installation
 
-To reduce code duplication between variants, I am moving to a plugin system.
-The normal variant repos will stay active during the transition.
+1) Review Installation guide located at [Docs](https://github.com/fHDHR/fHDHR/blob/main/docs/README.md)
+
+2) Insert this plugin into the `plugins` directory of fHDHR using `git clone` or downloading a release zip file.
+
+3) Adjust your configuration file with the below settings:
+
+````
+[locast]
+# username =
+# password =
+# override_zipcode =
+# override_latitude =
+# override_longitude =
+# tuners = 3
+````
