@@ -12,6 +12,9 @@ class Plugin_OBJ():
     def __init__(self, plugin_utils):
         self.plugin_utils = plugin_utils
 
+        self.tuners = self.plugin_utils.config.dict["locast"]["tuners"]
+        self.stream_method = self.plugin_utils.config.dict["locast"]["stream_method"]
+
         self.status_dict = {"donateExp": None}
 
         self.location = {
@@ -23,8 +26,6 @@ class Plugin_OBJ():
                         }
         self.zipcode = self.plugin_utils.config.dict["locast"]["override_zipcode"]
         self.mock_location = self.format_mock_location()
-
-        self.tuners = self.plugin_utils.config.dict["locast"]["tuners"]
 
         self.login()
 
