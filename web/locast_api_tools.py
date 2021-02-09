@@ -2,6 +2,8 @@ from flask import Response, request, redirect
 import urllib.parse
 import json
 
+from .dma_markets import major_cities
+
 
 class Locast_API_Tools():
     endpoints = ["/api/locast/tools"]
@@ -69,6 +71,33 @@ class Locast_API_Tools():
 
             return Response(status=200,
                             response=status_json,
+                            mimetype='application/json')
+
+        elif method == "chan_counts":
+            dma_info = []
+            unique_dma = []
+            for city in major_cities:
+                if city["dma_code"] not in [x["dma"] for x in unique_dma]:
+                    unique_dma.append({"location": city["city"], "dma": city["dma_code"]})
+            for dma_item in unique_dma:
+                stations_url = 'https://api.locastnet.org/api/watch/epg/%s' % dma_item["dma"]
+
+                try:
+                    stationsReq = self.plugin_utils.web.session.get(stations_url)
+                    stationsReq.raise_for_status()
+                    stationsRes = stationsReq.json()
+                except self.plugin_utils.web.exceptions.HTTPError as err:
+                    self.plugin_utils.logger.error('Error while getting stations: %s' % err)
+                    stationsRes = []
+
+                if len(stationsRes):
+                    dma_item["chan_count"] = len(stationsRes)
+                    dma_info.append(dma_item)
+
+            count_json = json.dumps(dma_info, indent=4)
+
+            return Response(status=200,
+                            response=count_json,
                             mimetype='application/json')
 
         else:
