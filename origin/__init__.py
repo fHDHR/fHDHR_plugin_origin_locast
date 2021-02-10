@@ -12,9 +12,6 @@ class Plugin_OBJ():
     def __init__(self, plugin_utils):
         self.plugin_utils = plugin_utils
 
-        self.tuners = self.plugin_utils.config.dict["locast"]["tuners"]
-        self.stream_method = self.plugin_utils.config.dict["locast"]["stream_method"]
-
         self.status_dict = {"donateExp": None}
 
         self.location = {
@@ -24,10 +21,47 @@ class Plugin_OBJ():
                         "city": None,
                         "active": False
                         }
-        self.zipcode = self.plugin_utils.config.dict["locast"]["override_zipcode"]
-        self.mock_location = self.format_mock_location()
 
         self.login()
+
+    @property
+    def tuners(self):
+        return self.plugin_utils.config.dict["locast"]["tuners"]
+
+    @property
+    def stream_method(self):
+        return self.plugin_utils.config.dict["locast"]["stream_method"]
+
+    @property
+    def mock_location(self):
+        if not self.latitude or not self.longitude:
+            return None
+        else:
+            loc_dict = {
+                        "latitude": self.latitude,
+                        "longitude": self.longitude
+                        }
+            return loc_dict
+
+    @property
+    def zipcode(self):
+        return self.plugin_utils.config.dict["locast"]["override_zipcode"]
+
+    @property
+    def latitude(self):
+        return self.plugin_utils.config.dict["locast"]["override_latitude"]
+
+    @property
+    def longitude(self):
+        return self.plugin_utils.config.dict["locast"]["override_longitude"]
+
+    @property
+    def username(self):
+        return self.plugin_utils.config.dict["locast"]["username"]
+
+    @property
+    def password(self):
+        return self.plugin_utils.config.dict["locast"]["password"]
 
     def get_channels(self):
 
@@ -104,7 +138,7 @@ class Plugin_OBJ():
         return stream_info
 
     def login(self):
-        self.plugin_utils.logger.info("Logging into Locast using username %s..." % self.plugin_utils.config.dict["locast"]["username"])
+        self.plugin_utils.logger.info("Logging into Locast using username %s..." % self.username)
         self.token = self.get_token()
         if not self.token:
             raise fHDHR.exceptions.OriginSetupError("Locast Login Failed")
@@ -123,8 +157,8 @@ class Plugin_OBJ():
                       "\"username\":\"%s\","
                       "\"password\":\"%s\""
                       "}"
-                      % (self.plugin_utils.config.dict["locast"]["username"],
-                         self.plugin_utils.config.dict["locast"]["password"])
+                      % (self.username,
+                         self.password)
                       ).encode("utf-8")
 
         try:
@@ -241,14 +275,3 @@ class Plugin_OBJ():
         lon = self.mock_location['longitude']
         location_url = 'https://api.locastnet.org/api/watch/dma/{}/{}'.format(lat, lon)
         return self.get_geores_json(location_url, "Coordinate")
-
-    def format_mock_location(self):
-        if (not self.plugin_utils.config.dict["locast"]["override_latitude"] or
-           not self.plugin_utils.config.dict["locast"]["override_longitude"]):
-            return None
-        else:
-            loc_dict = {
-                          "latitude": self.plugin_utils.config.dict["locast"]["override_latitude"],
-                          "longitude": self.plugin_utils.config.dict["locast"]["override_longitude"],
-                          }
-            return loc_dict
