@@ -18,7 +18,7 @@ class Locast_HTML():
 
         self.origin = plugin_utils.origin
 
-        self.template_file = pathlib.Path(fhdhr.config.dict["plugin_web_paths"][plugin_utils.namespace]["path"]).joinpath('locast.html')
+        self.template_file = pathlib.Path(plugin_utils.path).joinpath('locast.html')
         self.template = StringIO()
         self.template.write(open(self.template_file).read())
 
@@ -33,7 +33,7 @@ class Locast_HTML():
                     datetime.datetime.utcnow()).total_seconds()))
             origin_status_dict = {
                                     "Login": "Success",
-                                    "Username": self.plugin_utils.config.dict["locast"]["username"],
+                                    "Username": self.origin.username,
                                     "DMA": self.origin.location["DMA"],
                                     "City": self.origin.location["city"],
                                     "Latitude": self.origin.location["latitude"],
