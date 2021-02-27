@@ -1,6 +1,7 @@
 import datetime
 import re
 import json
+from simplejson import errors as simplejsonerrors
 
 import fHDHR.tools
 from fHDHR.tools import isint, isfloat
@@ -173,6 +174,9 @@ class Plugin_OBJ():
         except json.JSONDecodeError as err:
             self.plugin_utils.logger.error('Login Failed: %s' % err)
             return None
+        except simplejsonerrors.JSONDecodeError as err:
+            self.plugin_utils.logger.error('Login Failed: %s' % err)
+            return None
         token = loginRes["token"]
 
         try:
@@ -189,6 +193,9 @@ class Plugin_OBJ():
         try:
             userresp = userReq.json()
         except json.JSONDecodeError as err:
+            self.plugin_utils.logger.error('Login Failed: %s' % err)
+            return None
+        except simplejsonerrors.JSONDecodeError as err:
             self.plugin_utils.logger.error('Login Failed: %s' % err)
             return None
         self.plugin_utils.logger.info("User Info obtained.")
@@ -251,6 +258,9 @@ class Plugin_OBJ():
         try:
             geoRes = req.json()
         except json.JSONDecodeError:
+            self.plugin_utils.logger.error("Unable to retrieve %s location." % location_type)
+            return False
+        except simplejsonerrors.JSONDecodeError:
             self.plugin_utils.logger.error("Unable to retrieve %s location." % location_type)
             return False
         self.set_location(geoRes)
