@@ -94,6 +94,10 @@ class Locast_API_Tools():
                     dma_item["chan_count"] = len(stationsRes)
                     dma_info.append(dma_item)
 
+            sort_method = request.args.get('sort', default=None, type=str)
+            if sort_method in ['location', 'dma', 'chan_count']:
+                dma_info = sorted(dma_info, key=lambda i: i['chan_count'])
+
             count_json = json.dumps(dma_info, indent=4)
 
             return Response(status=200,
