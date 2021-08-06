@@ -156,10 +156,12 @@ class Plugin_OBJ():
 
         login_json = ("{"
                       "\"username\":\"%s\","
-                      "\"password\":\"%s\""
+                      "\"password\":\"%s\","
+                      "\"captcha\":\"%s\""
                       "}"
                       % (self.username,
-                         self.password)
+                         self.password,
+                         "foo")
                       ).encode("utf-8")
 
         try:
