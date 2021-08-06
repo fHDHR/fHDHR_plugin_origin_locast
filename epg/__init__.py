@@ -24,7 +24,11 @@ class Plugin_OBJ():
 
         self.remove_stale_cache(todaydate)
 
-        url = "https://api.locastnet.org/api/watch/epg/%s" % self.origin.location["DMA"]
+        try:
+            url = "https://api.locastnet.org/api/watch/epg/%s" % self.origin.location["DMA"]
+        except AttributeError:
+            return programguide
+
         url_headers = {'Content-Type': 'application/json', 'authorization': 'Bearer %s' % self.origin.token}
         self.plugin_utils.logger.info("Fetching:  %s" % url)
         try:
