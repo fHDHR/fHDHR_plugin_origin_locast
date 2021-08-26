@@ -34,6 +34,10 @@ class Plugin_OBJ():
         return self.plugin_utils.config.dict["locast"]["stream_method"]
 
     @property
+    def client_id(self):
+        return self.plugin_utils.config.dict["locast"]["client_id"]
+
+    @property
     def mock_location(self):
         if not self.latitude or not self.longitude:
             return None
@@ -151,11 +155,8 @@ class Plugin_OBJ():
 
     def get_token(self):
 
-        # The whole internet is using this client_id, find a better way later
-        client_id = "CqhAMsBw%2BnxTXSJMLGqyOw%3D%3D"
-
         login_url = "https://api.locastnet.org/api/user/login"
-        login_url += "?client_id=%s" % client_id
+        login_url += "?client_id=%s" % self.client_id
         login_headers = {'Content-Type': 'application/json'}
 
         login_json = ("{"

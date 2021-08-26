@@ -37,6 +37,11 @@
                     "value": "direct",
                     "config_file": true,
                     "config_web": true
+                },
+          "client_id":{
+                    "value": "CqhAMsBw%2BnxTXSJMLGqyOw%3D%3D",
+                    "config_file": true,
+                    "config_web": true
                 }
   }
 }
