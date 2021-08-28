@@ -1,6 +1,7 @@
 import datetime
 import re
 import json
+import urllib.parse
 from simplejson import errors as simplejsonerrors
 
 import fHDHR.tools
@@ -156,7 +157,7 @@ class Plugin_OBJ():
     def get_token(self):
 
         login_url = "https://api.locastnet.org/api/user/login"
-        login_url += "?client_id=%s" % self.client_id
+        login_url += "?client_id=%s" % urllib.parse.quote(self.client_id)
         login_headers = {'Content-Type': 'application/json'}
 
         login_json = ("{"
