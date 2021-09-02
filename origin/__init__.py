@@ -210,11 +210,13 @@ class Plugin_OBJ():
 
         if (userresp['didDonate'] and
            datetime.datetime.now() > datetime.datetime.fromtimestamp(userresp['donationExpire'] / 1000)):
-            self.plugin_utils.logger.error("Donation expired")
-            return False
+            self.plugin_utils.logger.info("Donation expired")
+            self.status_dict["donateExp"] = "Donation expired"
+
         elif not userresp['didDonate']:
-            self.plugin_utils.logger.error("User didn't donate")
-            return False
+            self.plugin_utils.logger.info("User didn't donate")
+            self.status_dict["donateExp"] = "User didn't donate"
+
         else:
             donateExp = datetime.datetime.fromtimestamp(userresp['donationExpire'] / 1000)
             self.plugin_utils.logger.info("User donationExpire: {}".format(donateExp))
