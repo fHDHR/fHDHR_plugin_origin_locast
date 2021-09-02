@@ -13,6 +13,9 @@ fHDHR is labeled as beta until we reach v1.0.0
 
 Join us in `#fHDHR <irc://irc.freenode.net/#fHDHR>`_ on Freenode.
 
+# NOTICE
+As of Sept 2nd, Locast has ceased their service. This plugin will no longer provide streaming.
+
 # Installation
 
 1) Review Installation guide located at [Docs](https://github.com/fHDHR/fHDHR/blob/main/docs/README.md)
