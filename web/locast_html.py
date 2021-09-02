@@ -28,9 +28,12 @@ class Locast_HTML():
     def get(self, *args):
 
         if self.origin.setup_success:
-            donation_expire = humanized_time(
-               int((self.origin.status_dict["donateExp"] -
-                    datetime.datetime.utcnow()).total_seconds()))
+            try:
+                donation_expire = humanized_time(
+                   int((self.origin.status_dict["donateExp"] -
+                        datetime.datetime.utcnow()).total_seconds()))
+            except ValueError:
+                donation_expire = str(self.origin.status_dict["donateExp"])
             origin_status_dict = {
                                     "Login": "Success",
                                     "Username": self.origin.username,
